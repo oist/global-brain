@@ -1,6 +1,6 @@
 # global-brain
 ## Running the Morrison-Young model
-In the notebook `run_model_Lyapunov_spectrum.ipynb` you can find the Python implementation of the Morrison-Young model. The original model was written in `Julia` and can be found here: https://github.com/mmtree/Celegans_premotor/tree/main. The article can be found: https://doi.org/10.48550/arXiv.2501.00278.
+In the notebook `run_model_Lyapunov_spectrum.ipynb` you can find the `Python` implementation of the Morrison-Young model. The original model was written in `Julia` and can be found here: https://github.com/mmtree/Celegans_premotor/tree/main. The article can be found: https://doi.org/10.48550/arXiv.2501.00278.
 ### Some notes on the translation to Python
 1. For the translation I did not redo the regression. This means I use the values determined by Morrison and Young for the bias term $d$, the value of $\beta$ and the weights of the synaptic connection matrix $A$. They can be found in Data folder.
 2. Because I use $d$ and $A$ as a result from the original implementation, I had to make sure the order of the neurons is the same in the Python version as in the Julia version. The order is determined when the specific neurons are extracted from the dataset from White et al. (1986). Although the python version here uses a similar method as the original Julia version, the order of the neurons changes. Specifically, the list `final_neurons` is determined by determining the unique neurons present in the White et al. dataset. For both `Julia` and `Python` this method puts those unique elements in an arbitrary order and these order rarely agree between the two languages. To circumvent this, I saved the `final_neurons` list in Julia as a `csv` file and use that to create the `final_neurons` list in `Python`.
@@ -20,3 +20,7 @@ For running the model I needed different datasets.
     - `D4`, `dDdt4`: 2023-01-05-01
     - `D5`, `dDdt5`: 2023-01-09-15
     - `D6`, `dDdt6`: 2023-01-09-22
+## Calculating the Lyapunov Spectrum using model-equations Jacobian
+In the notebook `run_model_Lyapunov_spectrum.ipynb` the Lyapunov spectrum is calculated from the output of the model using the Jacobian determined from the model equations. This method is derived from the paper by Engelken et al. (2023) DOI: https://doi.org/10.1103/PhysRevResearch.5.043044.
+
+Importantly, the derivation of the Jacobian can be found in the thesis. To calculate the Lyapunov spectrum we need to combine the output of the model (time series of the 15 core neurons) with the data (time series of the 69 signal neurons).
