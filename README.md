@@ -20,7 +20,10 @@ For running the model I needed different datasets.
     - `D4`, `dDdt4`: 2023-01-05-01
     - `D5`, `dDdt5`: 2023-01-09-15
     - `D6`, `dDdt6`: 2023-01-09-22
-## Calculating the Lyapunov Spectrum using model-equations Jacobian
+## Calculating the Lyapunov Spectrum using the Jacobian from the model-equations
 In the notebook `run_model_Lyapunov_spectrum.ipynb` the Lyapunov spectrum is calculated from the output of the model using the Jacobian determined from the model equations. This method is derived from the paper by Engelken et al. (2023) DOI: https://doi.org/10.1103/PhysRevResearch.5.043044.
 
 Importantly, the derivation of the Jacobian can be found in the thesis. To calculate the Lyapunov spectrum we need to combine the output of the model (time series of the 15 core neurons) with the data (time series of the 69 signal neurons).
+
+## Calculating the Lyapunov spectrum using the estimated Jacobian
+In the notebook `data_driven_lyapunov.ipynb` the Lyapunov spectrum is calculated using a Jacobian estimation algorithm performed on the reconstructed state space. This state space is reconstructed from 6 different model outputs. These model outputs are acquired by using the same Atanas datasets used for calculating the `D` and `dDdt` matrices mentioned above. The solutions of these model runs can be found in the 'Data' folder under the names `solution1.npz`, `solution2.npz`, etc. The implementation for the state space reconstruction comes from here: https://github.com/oist/Physics-of-Behavior-Tutorials/blob/main/tutorial2_statespace.ipynb. The implementation to estimate the Jacobian and calculate the Lyapunov spectrum comes from the thesis of Capucine Beraud (code unpublished).
